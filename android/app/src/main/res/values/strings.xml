@@ -1,0 +1,7 @@
+<?xml version='1.0' encoding='utf-8'?>
+<resources>
+    <string name="app_name">adico-android</string>
+    <string name="title_activity_main">adico-android</string>
+    <string name="package_name">com.frontadico.app</string>
+    <string name="custom_url_scheme">com.frontadico.app</string>
+</resources>
