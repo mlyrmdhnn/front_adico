@@ -15,6 +15,11 @@ const { getDetail, detailInbox, rejectUpdate, approvedUpdate } = useInbox()
 const { exportPdf } = usePdf()
 const pdfRef = ref<HTMLElement | null>(null)
 const isPdf = ref(false)
+const tgl = new Date().toLocaleDateString('id-ID', {
+    day: '2-digit',
+    month: 'long',
+    year: 'numeric'
+})
 async function handleExport() {
     if (!pdfRef.value) {
         alert('Gagal export: area PDF tidak ditemukan')
@@ -27,7 +32,7 @@ async function handleExport() {
 
         await exportPdf(
             pdfRef.value,
-            `nota-${detailInbox.value?.id ?? 'unknown'}.pdf`
+            `nota-${(detailInbox.value as any).customer.store_name ?? 'unknown'}-${tgl}-${(detailInbox.value as any).salesman.name}.pdf`
         )
 
         alert('PDF berhasil diunduh')

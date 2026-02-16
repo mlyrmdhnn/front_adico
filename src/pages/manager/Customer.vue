@@ -54,7 +54,7 @@ const getPage = (url: string) => {
                         <td class="px-3 py-2 whitespace-nowrap">{{ c.re ? c.re : '-' }}</td>
                         <td class="px-3 py-2 whitespace-nowrap">{{ c.created_by_salesman ? c.created_by_salesman.name :
                             '-'
-                        }}</td>
+                            }}</td>
                         <td class="px-3 py-2 whitescpae-nowrap">
                             <div class="gap-2 flex">
                                 <button @click="setDelete(c.id)"

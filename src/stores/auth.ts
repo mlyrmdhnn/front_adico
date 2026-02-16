@@ -7,6 +7,7 @@ export const useAuthStore = defineStore('auth', {
     user: null as null | {
       id: number
       role: string
+      name: string
     },
     loaded: false,
   }),

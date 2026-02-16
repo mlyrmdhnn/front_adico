@@ -2,8 +2,11 @@
 import Main from '@/layouts/Main.vue';
 import { useSalesman } from '@/composables/salesman/useSalesman';
 import useSupervisor from '@/composables/useSupervisor';
+import { Eye, EyeOff } from 'lucide-vue-next';
+import { ref } from 'vue';
 const { isLoading, createSalesman, form } = useSalesman()
 const { supervisorForm, createSupervisor, isLoadingCreateSupervisor } = useSupervisor()
+const showPassword = ref(false)
 </script>
 <template>
     <Main>
@@ -46,11 +49,32 @@ const { supervisorForm, createSupervisor, isLoadingCreateSupervisor } = useSuper
                     </div>
 
                     <!-- Password -->
-                    <div class="">
-                        <label class="block text-sm text-slate-600 mb-1">
+                    <div class="space-y-1">
+                        <label class="block text-sm font-medium text-slate-700">
                             Password
                         </label>
-                        <input v-model="supervisorForm.password" type="password" placeholder="••••••••" class="input" />
+
+                        <div class="relative">
+                            <input v-model="supervisorForm.password" :type="showPassword ? 'text' : 'password'"
+                                autocomplete="current-password" placeholder="••••••••" class="w-full rounded-lg border border-slate-300 px-3 py-2 pr-10 text-sm
+                   focus:outline-none focus:ring-2 focus:ring-slate-800 focus:border-slate-800
+                   transition duration-150 ease-in-out" required />
+
+                            <!-- Toggle Button -->
+                            <button type="button" class="absolute inset-y-0 right-0 flex items-center justify-center
+                   w-10 text-slate-400 hover:text-slate-700
+                   focus:outline-none focus:text-slate-900
+                   transition">
+                                <!-- ICON (ganti via v-if nanti) -->
+                                <template v-if="!showPassword">
+                                    <Eye @click="showPassword = !showPassword" class="w-5 h-5" />
+                                </template>
+                                <!-- atau -->
+                                <template v-if="showPassword">
+                                    <EyeOff @click="showPassword = !showPassword" class="w-5 h-5" />
+                                </template>
+                            </button>
+                        </div>
                     </div>
 
                     <!-- Action -->

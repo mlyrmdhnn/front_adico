@@ -14,6 +14,11 @@ import { usePdf } from '@/composables/pdf/usePdf';
 
 
 const route = useRoute()
+const tgl = new Date().toLocaleDateString('id-ID', {
+    day: '2-digit',
+    month: 'long',
+    year: 'numeric'
+})
 
 // Composables
 const { getDetail, detailInbox, rejectUpdate, approvedUpdate } = useInbox()
@@ -25,6 +30,7 @@ const {
 const { exportPdf } = usePdf()
 const pdfRef = ref<HTMLElement | null>(null)
 
+
 async function handleExport() {
     if (!pdfRef.value) {
         alert('Gagal export: area PDF tidak ditemukan')
@@ -33,11 +39,11 @@ async function handleExport() {
 
     try {
         isPdf.value = true
-        await nextTick() // ⬅️ tunggu DOM update (hide kolom Actions)
+        await nextTick()
 
         await exportPdf(
             pdfRef.value,
-            `nota-${detailInbox.value?.uuid ?? 'unknown'}.pdf`
+            `nota-${(detailInbox.value as any).customer.store_name ?? 'unknown'}-${tgl}-${(detailInbox.value as any).salesman.name}.pdf`
         )
 
         alert('PDF berhasil diunduh')
@@ -55,6 +61,8 @@ query.value = route.query.id
 onMounted(async () => {
     await getDetail(route.query.id)
 })
+
+// const tgl = new Date()
 
 // Format tanggal
 function formatTanggal(date: any) {
@@ -128,6 +136,7 @@ const total = computed(() => {
 
 const isPdf = ref(false)
 
+
 </script>
 
 <template>
@@ -140,7 +149,6 @@ const isPdf = ref(false)
 
     <ChooseDiscont v-if="isShowChooseDiscount" @discount2="choose2" @discount1="choose1"
         @cancel="closeChooseDiscount" />
-
     <!-- Main content -->
     <Main>
         <section class="bg-white rounded-md shadow-md p-2 text-slate-700 mb-4">Manage Product</section>

@@ -23,7 +23,10 @@ const date = new Date()
 const year = date.getFullYear()
 const month = String(date.getMonth() + 1).padStart(2, '0')
 const day = String(date.getDate()).padStart(2, '0')
-
+const tgl = new Date().toLocaleDateString('id-ID', {
+    month: 'long',
+    year: 'numeric'
+})
 
 async function handleExport() {
     if (!pdfRef.value) {
@@ -33,11 +36,11 @@ async function handleExport() {
 
     try {
         isPdf.value = true
-        await nextTick() // ⬅️ tunggu DOM update (hide kolom Actions)
+        await nextTick()
 
         await exportPdf(
             pdfRef.value,
-            `Monthly recap ${user?.role}`
+            `${user?.name} ${tgl} Monthly recap Customer `
         )
 
         alert('PDF berhasil diunduh')
@@ -68,7 +71,7 @@ const totalCustomer = computed(() => {
                     <!-- HEADER -->
                     <div class="mb-5">
                         <h1 class="">Salesman = {{ (user as any)?.name }}</h1>
-                        <h1>Title = {{ `Monthly recap Customer ${user?.role} ${year}-${month}-${day}` }}</h1>
+                        <h1>Title = {{ `${user?.name} ${tgl} Monthly recap Customer ` }}</h1>
                     </div>
                     <div class="pdf-header">
                         <div>
@@ -80,9 +83,13 @@ const totalCustomer = computed(() => {
                             <thead>
                                 <tr>
                                     <th colspan="1">No</th>
-                                    <th colspan="3"> Name</th>
-                                    <th colspan="4">Phone</th>
-                                    <th colspan="4">NPWP</th>
+                                    <th colspan="1">Customer Code</th>
+                                    <th colspan="1">NPWP</th>
+                                    <th colspan="1">Phone</th>
+                                    <th colspan="4">Address</th>
+                                    <th colspan="2">PIC</th>
+                                    <th colspan="1">RE</th>
+                                    <th colspan="1">Created By</th>
                                 </tr>
                             </thead>
                             <tbody>
@@ -90,9 +97,13 @@ const totalCustomer = computed(() => {
                                     <td>
                                         {{ i + 1 }}
                                     </td>
-                                    <td colspan="3" class="right">{{ c.name }}</td>
-                                    <td colspan="4" class="right">{{ c.phone }}</td>
-                                    <td colspan="4" class="right">{{ c.npwp }}</td>
+                                    <td colspan="1" class="right">{{ c.customer_code }}</td>
+                                    <td colspan="1" class="right">{{ c.phone ? c.phone : '-' }}</td>
+                                    <td colspan="1" class="right">{{ c.npwp ? c.npwp : '-' }}</td>
+                                    <td colspan="4" class="right">{{ c.address }}</td>
+                                    <td colspan="2" class="right">{{ c.pic ? c.pic : '-' }}</td>
+                                    <td colspan="1" class="right">{{ c.re }}</td>
+                                    <td colspan="1" class="right">{{ c.created_by_salesman.name }}</td>
                                 </tr>
                                 <tr class="pdf-total-row">
                                     <td colspan="2">

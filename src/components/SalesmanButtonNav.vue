@@ -4,7 +4,7 @@ const links = [
     { name: 'Create Customer/NOO', path: '/salesman/customer' },
     { name: 'Report Salesman', path: '/salesman/report' },
     { name: 'Customer Service', path: '/salesman/developer/support' },
-    { name: 'Customer Service', path: '/salesman/panduan' },
+    { name: 'Panduan', path: '/salesman/panduan' },
     { name: 'Program penjualan', path: '/salesman/notification' },
 ]
 </script>
