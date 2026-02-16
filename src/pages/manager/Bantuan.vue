@@ -2,8 +2,9 @@
 import Main from '@/layouts/Main.vue'
 import { Send } from 'lucide-vue-next'
 import { useChatDeveloper } from '@/composables/useChatDeveloper';
-const { isLoading, message, sendMessage, historyChat, getMessage } = useChatDeveloper()
+const { isLoading, message, sendMessage, historyChat, getMessage, readChatNotif } = useChatDeveloper()
 getMessage()
+readChatNotif()
 const formatDate = (date: any) => {
     if (!date) return '-'
 

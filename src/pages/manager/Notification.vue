@@ -36,7 +36,7 @@ const customLabel = (user: any) => {
                         Create Notification
                     </h1>
                     <p class="text-sm text-slate-500">
-                        Kirim global notifikasi pada salesman
+                        Kirim notifikasi by group
                     </p>
                 </div>
 
@@ -75,7 +75,7 @@ const customLabel = (user: any) => {
                         Create Notification
                     </h1>
                     <p class="text-sm text-slate-500">
-                        Kirim notifikasi khusus pada salesman
+                        Kirim notifikasi personal
                     </p>
                 </div>
 

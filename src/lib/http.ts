@@ -1,5 +1,6 @@
 import axios from 'axios'
-
+const dev = 'https://back-adico.test/api'
+const prod = 'https://adico.my.id/back/api'
 declare module 'axios' {
   export interface AxiosRequestConfig {
     skipAuth?: boolean
@@ -7,12 +8,12 @@ declare module 'axios' {
 }
 
 export const api = axios.create({
-  baseURL: 'https://back-adico.test/api',
+  baseURL: prod,
   withCredentials: true,
 })
 
 const refreshApi = axios.create({
-  baseURL: 'https://back-adico.test/api',
+  baseURL: prod,
   withCredentials: true,
 })
 

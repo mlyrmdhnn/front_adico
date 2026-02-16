@@ -51,12 +51,16 @@ const total = computed(() => {
     ) ?? 0
 })
 
+const sync = async () => {
+    await getDetail(route.query.id)
+}
+
 onMounted(async () => {
     await getDetail(route.query.id)
 })
-function formatTanggal(date: string) {
-    return new Date(date + 'Z').toLocaleString('id-ID', {
-        timeZone: 'Asia/Jakarta',
+
+function formatTanggal(date: any) {
+    return new Date(date).toLocaleString('id-ID', {
         day: '2-digit',
         month: 'short',
         year: 'numeric',
@@ -65,10 +69,17 @@ function formatTanggal(date: string) {
     })
 }
 
+
 </script>
 <template>
     <SalesmanLayout>
+
+
+
         <section class="bg-white rounded-md shadow-md p-2 text-slate-700">Manage Product</section>
+        <button
+            class="bg-sky-500 rounded p-2 text-white cursor-pointer mt-4 active:scale-95 transition-all duration-200"
+            @click="sync">sync</button>
         <section class="bg-white rounded-md p-4 text-slate-700 mt-4">
             <div class="p-4 rounded bg-white">
                 <div v-if="detailInbox" class="pdf-area">
@@ -77,10 +88,13 @@ function formatTanggal(date: string) {
                         <div class="pdf-header">
                             <div>
                                 <h1>NOTA PENJUALAN</h1>
-                                <div>Status: {{ detailInbox.status }}</div>
+                                <div>Status: {{
+                                    (detailInbox.status1 !== 'pending' && detailInbox.status1 !== 'pending' ?
+                                        detailInbox.status1 : 'pending')
+                                }}</div>
                                 <div>Tanggal: {{ formatTanggal(detailInbox.created_at) }}</div>
                                 <div>Metode: {{ detailInbox.payment_method.name }}</div>
-                                <div>Invoice No : INV-{{ detailInbox.uuid }}</div>
+                                <div>Invoice No : INV-{{ detailInbox.created_at }}</div>
                             </div>
                             <div class="right">
                                 <div>Salesman: {{ detailInbox.salesman.name }}</div>
@@ -90,8 +104,9 @@ function formatTanggal(date: string) {
 
                         <!-- INFO TOKO -->
                         <div class="pdf-info">
-                            <div><b>Toko:</b> {{ detailInbox.store.name }}</div>
-                            <div><b>Alamat:</b> {{ detailInbox.store.address }}</div>
+                            <div><b>Toko:</b> {{ detailInbox.customer.store_name }}</div>
+                            <div><b>Alamat:</b> {{ detailInbox.customer.address }}</div>
+                            <div><b>Customer Code:</b> {{ detailInbox.customer.customer_code }}</div>
                             <div>
                                 <b>Approval Manager:</b>
                                 {{ detailInbox.manager?.name ?? '-' }}({{ detailInbox.status1 ?? '-' }})
@@ -118,10 +133,6 @@ function formatTanggal(date: string) {
                                 <tr v-for="item in detailInbox.request_items" :key="item.id">
                                     <td>
                                         {{ item.product.name }}
-                                        <div class="muted">
-                                            {{ item.product.brand.name }} • {{ item.product.configuration.configuration
-                                            }}
-                                        </div>
                                     </td>
                                     <td class="right">{{ item.qty }}</td>
                                     <td>{{ item.product.configuration.configuration }}</td>

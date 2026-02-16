@@ -7,47 +7,19 @@ import Multiselect from 'vue-multiselect';
 
 // inisialisasi
 const route = useRoute()
-const { getCustomerDetail, dataCustomer, isLoading, formEditCustomer, selectedStore, getStore, dataStore } = useCustomer()
+const { getCustomerDetail, dataCustomer, isLoading, formEditCustomer, selectedStore, getStore, dataStore, editCustomer } = useCustomer()
 console.log(route.query.id)
 onMounted(() => {
     getCustomerDetail(route.query.id)
     getStore()
+    console.log(route.query)
 })
 
-// const stores = ref<any[]>([
-//     {
-//         store_id: null,
-//     }
-// ])
 
-// const addRow = () => {
-//     stores.value.push({
-//         store_id: null
-//     })
-// }
-
-const editCustomer = async () => {
-    const payload = {
-        name: formEditCustomer.value.name,
-        phone: formEditCustomer.value.phone,
-        npwp: formEditCustomer.value.npwp,
-        store_ids: formEditCustomer.value.stores
-            .filter(Boolean)
-            .map(s => s.id),
-    }
-
-}
-
-const addRow = () => {
-    formEditCustomer.value.stores.push(null)
-}
 
 </script>
 <template>
     <Main>
-        <template v-if="!route.query.id || !route.query">
-            Sorry we cant find that
-        </template>
         <section class="bg-white rounded-md p-2 text-slate-700">
             Edit Customer
         </section>
@@ -55,51 +27,62 @@ const addRow = () => {
             <div class=" mx-auto bg-white rounded-xl border border-slate-200 p-2 lg:p-6 shadow-sm">
                 <!-- Form -->
                 <form @submit.prevent="" class="grid grid-cols-1 md:grid-cols-2 gap-5">
-                    <!-- Username -->
                     <div>
                         <label class="block text-sm text-slate-600 mb-1">
-                            Customer Name
+                            Outlet
                         </label>
-                        <input v-model="formEditCustomer.name" type="text" placeholder="Customer name" class="input" />
+                        <input v-model="formEditCustomer.store_name" type="text" placeholder="Outlet Name"
+                            class="input" />
                     </div>
 
-                    <!-- Name -->
+                    <div>
+                        <label class="block text-sm text-slate-600 mb-1">
+                            Store Address
+                        </label>
+                        <input v-model="formEditCustomer.address" type="text" placeholder="Store Address"
+                            class="input" />
+                    </div>
+
                     <div>
                         <label class="block text-sm text-slate-600 mb-1">
                             Phone
                         </label>
-                        <input v-model="formEditCustomer.phone" type="number" placeholder="08XXXXXXXXXX"
-                            class="input" />
+                        <input v-model="formEditCustomer.phone" type="text" placeholder="08XXXXXXXXXX" class="input" />
                     </div>
 
                     <div>
                         <label class="block text-sm text-slate-600 mb-1">
                             Npwp
                         </label>
-                        <input v-model="formEditCustomer.npwp" type="number" placeholder="NPWP" class="input" />
+                        <input v-model="formEditCustomer.npwp" type="text" placeholder="NPWP" class="input" />
                     </div>
 
-                    <!-- {{ formEditCustomer.stores  -->
 
-
-                    <div v-for="(store, index) in formEditCustomer.stores" :key="index" class="col-span-2">
+                    <div>
                         <label class="block text-sm text-slate-600 mb-1">
-                            Store {{ index + 1 }}
+                            PIC
                         </label>
-
-                        <Multiselect v-model="formEditCustomer.stores[index]" :options="dataStore" track-by="id"
-                            label="name" placeholder="Select store" />
+                        <input v-model="formEditCustomer.pic" type="text" placeholder="PIC" class="input" />
                     </div>
 
-                    <button type="button" @click="addRow">
-                        Tambah Toko
-                    </button>
+                    <div>
+                        <label class="block text-sm text-slate-600 mb-1">
+                            RE
+                        </label>
+                        <select v-model="formEditCustomer.re" name="" id="" class="input">
+                            <option value="Senin">Senin</option>
+                            <option value="Selasa">Selasa</option>
+                            <option value="Rabu">Rabu</option>
+                            <option value="Kamis">Kamis</option>
+                            <option value="Jumat">Jumat</option>
+                            <option value="Sabtu">Sabtu</option>
+                        </select>
+                    </div>
 
-                    <!-- Action -->
                     <div class="md:col-span-2 flex justify-end gap-3 pt-4">
-                        <button type="submit" class="px-5 py-2 rounded-lg text-sm text-white
+                        <button @click="editCustomer" type="submit" class="px-5 py-2 rounded-lg text-sm text-white
                                    bg-[#1B211A] hover:bg-[#141914] transition cursor-pointer">
-                            {{ isLoading ? 'Creating...' : 'Create Store' }}
+                            {{ isLoading ? 'Saving...' : 'Save Change' }}
                         </button>
                     </div>
                 </form>

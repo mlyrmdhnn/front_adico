@@ -9,6 +9,21 @@
            focus:outline-none focus:ring-2 focus:ring-[#1B211A]/30;
   }
 
+  .btn {
+    padding: 0.5rem 1.25rem;
+    border-radius: 0.5rem;
+    font-size: 0.875rem;
+    color: #ffffff;
+    background-color: #1B211A;
+    cursor: pointer;
+    transition: background-color 0.2s ease-in-out;
+    border: none;
+  }
+  
+  .btn:hover {
+    background-color: #141914;
+  }
+
 @theme {
     --color-fg-brand-subtle: var(--color-blue-200);
     --color-fg-brand: var(--color-blue-700);

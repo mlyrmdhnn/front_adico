@@ -11,7 +11,7 @@ export function useRequest() {
   const isDisabled = ref(false)
 
   const getStore = async () => {
-    const res = await api.get('/store/all')
+    const res = await api.get('/customer/all')
     dataStore.value = res.data.data
   }
 

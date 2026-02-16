@@ -158,7 +158,7 @@ const isPdf = ref(false)
                             }}</div>
                             <div>Tanggal: {{ formatTanggal(detailInbox.created_at) }}</div>
                             <div>Metode: {{ detailInbox.payment_method.name }}</div>
-                            <div>Invoice No : INV-{{ detailInbox.uuid }}</div>
+                            <div>Invoice No : INV-{{ detailInbox.created_at }}</div>
                         </div>
                         <div class="right">
                             <div>Salesman: {{ detailInbox.salesman.name }}</div>
@@ -168,8 +168,9 @@ const isPdf = ref(false)
 
                     <!-- INFO TOKO -->
                     <div class="pdf-info">
-                        <div><b>Toko:</b> {{ detailInbox.store.name }}</div>
-                        <div><b>Alamat:</b> {{ detailInbox.store.address }}</div>
+                        <div><b>Toko:</b> {{ detailInbox.customer.store_name }}</div>
+                        <div><b>Alamat:</b> {{ detailInbox.customer.address }}</div>
+                        <div><b>Customer Code:</b> {{ detailInbox.customer.customer_code }}</div>
                         <div>
                             <b>Approval Manager:</b>
                             {{ detailInbox.manager?.name ?? '-' }}
@@ -199,9 +200,6 @@ const isPdf = ref(false)
                             <tr v-for="item in detailInbox.request_items" :key="item.id">
                                 <td>
                                     {{ item.product.name }}
-                                    <div class="muted">
-                                        {{ item.product.brand.name }} • {{ item.product.configuration.configuration }}
-                                    </div>
                                 </td>
                                 <td class="right">{{ item.qty }}</td>
                                 <td>{{ item.product.configuration.configuration }}</td>

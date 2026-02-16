@@ -25,3 +25,5 @@
 // 22. salesman bisa tau berapa dia create customer dan store
 // 23. manager dan supervisor pun tau berapa customer dan store yg di input oleh salesman
 // 24. saat salesman membuat request, bisa membuat pesan singkat kepada manager (include pdf, [bersifat opsional])
+25. di create noo (new open outlet) isinya ada nama toko, pic, no hp(pic/customer), nama toko dan alamat toko, pkp atau non pkp(untuk npwp), RE hari(akan dikunjungi hari apa saja, misal hari senin, maka akan dikunjungi setiap hari senin)
+26. your request dimasukan ke report salesman

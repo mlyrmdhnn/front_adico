@@ -1,9 +1,11 @@
 <script setup lang="ts">
+import SalesmanButtonNav from '@/components/SalesmanButtonNav.vue';
 import SalesmanLayout from '@/layouts/SalesmanLayout.vue'
 </script>
 
 <template>
     <SalesmanLayout>
+        <SalesmanButtonNav class="mb-4" />
         <!-- HEADER -->
         <div class="bg-white rounded shadow-md p-4 mb-4">
             <header>

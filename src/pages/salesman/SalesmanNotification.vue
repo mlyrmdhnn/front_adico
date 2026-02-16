@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import SalesmanLayout from '@/layouts/SalesmanLayout.vue';
 import { useNotifications } from '@/composables/useNotifications';
+import SalesmanButtonNav from '@/components/SalesmanButtonNav.vue';
 import { onMounted } from 'vue';
 const { salesmanGetNotification, salesmanNotifData, isLoadingGetNotif, getNotifCount, readNotif } = useNotifications()
 salesmanGetNotification()
@@ -11,6 +12,7 @@ onMounted(async () => {
 </script>
 <template>
     <SalesmanLayout>
+        <SalesmanButtonNav class="mb-4" />
         <div class="space-y-3">
             <div v-for="d in salesmanNotifData" :key="d.id" class="p-4 rounded-lg border-l-4" :class="[
                 d.type === 'global'

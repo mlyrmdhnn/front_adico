@@ -5,6 +5,7 @@ import { ref, nextTick, computed } from 'vue'
 import { useAuthStore } from '@/stores/auth'
 import { FileText } from 'lucide-vue-next'
 import { useCustomer } from '@/composables/customer/useCustomer'
+import SalesmanButtonNav from '@/components/SalesmanButtonNav.vue'
 
 const { user } = useAuthStore()
 
@@ -64,6 +65,7 @@ const totalCustomer = computed(() => {
 
 <template>
     <SalesmanLayout>
+        <SalesmanButtonNav class="mb-4" />
         <div class="p-4 rounded bg-white">
 
             <!-- FILTER (SAMA PERSIS) -->
@@ -105,26 +107,32 @@ const totalCustomer = computed(() => {
                         <thead>
                             <tr>
                                 <th colspan="1">No</th>
+                                <th colspan="3">Customer Code</th>
                                 <th colspan="3">Name</th>
-                                <th colspan="4">Phone</th>
                                 <th colspan="4">NPWP</th>
+                                <th colspan="4">Phone</th>
+                                <th colspan="4">Address</th>
+                                <th colspan="4">PIC</th>
                             </tr>
                         </thead>
                         <tbody>
                             <tr v-for="(c, i) in dataCustomerBySalesmanMonthly" :key="i">
                                 <td>{{ i + 1 }}</td>
-                                <td colspan="3" class="right">{{ c.name }}</td>
-                                <td colspan="4" class="right">{{ c.phone }}</td>
-                                <td colspan="4" class="right">{{ c.npwp }}</td>
+                                <td colspan="3" class="right">{{ c.customer_code }}</td>
+                                <td colspan="3" class="right">{{ c.store_name }}</td>
+                                <td colspan="4" class="right">{{ c.npwp ? c.npwp : '-' }}</td>
+                                <td colspan="4" class="right">{{ c.phone ? c.phone : '-' }}</td>
+                                <td colspan="4" class="right">{{ c.address }}</td>
+                                <td colspan="4" class="right">{{ c.pic ? c.pic : '-' }}</td>
                             </tr>
 
                             <tr class="pdf-total-row">
-                                <td colspan="1">
+                                <td colspan="4">
                                     <label class="block text-xs mb-1">
                                         Total Customer
                                     </label>
                                 </td>
-                                <td class="right" colspan="11">
+                                <td class="right" colspan="19">
                                     {{ totalCustomer }}
                                 </td>
                             </tr>

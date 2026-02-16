@@ -5,20 +5,23 @@ import { LogOut, ShoppingCart, Menu } from 'lucide-vue-next'
 import { Headset } from 'lucide-vue-next';
 import { useAuth } from '@/composables/useAuth';
 import { ref, onMounted, onUnmounted, computed } from 'vue';
+import { useChatDeveloper } from '@/composables/useChatDeveloper';
 import { useAuthStore } from '@/stores/auth';
 const { user } = useAuthStore()
 const { userData, getMe, isLoading, logout } = useAuth()
 import { useRoute } from 'vue-router';
 const route = useRoute()
 const { inboxCount, count } = useRequestNotif()
-
+const { totalNotifChat, getNotifChatCount } = useChatDeveloper()
 getMe()
 inboxCount()
+getNotifChatCount()
 let intervalId: number | undefined
 
 onMounted(() => {
     intervalId = window.setInterval(async () => {
         await inboxCount()
+        await getNotifChatCount()
     }, 3000)
 })
 
@@ -30,35 +33,33 @@ onUnmounted(() => {
 })
 
 
-const notifications = ref(9)
+// const notifications = ref(9)
 
 const menus = computed(() => {
     if (user?.role === 'manager') {
         return [
             { name: 'Dashboard', path: '/dashboard' },
-            { name: 'Inbox', path: '/inbox', totalNotif: count.value },
-            { name: 'Notification', path: '/notification' },
+            { name: 'Salesman Request', path: '/inbox', totalNotif: count.value },
+            { name: 'Informasi Program', path: '/notification' },
             { name: 'Customer', path: '/customers' },
             { name: 'Produk', path: '/product' },
             { name: 'Manage Product', path: '/product/manage' },
             { name: 'Salesman', path: '/salesman' },
             { name: 'Supervisor', path: '/supervisor' },
-            { name: 'Store', path: '/store' },
-            { name: 'Developer Support', path: '/bantuan' },
+            { name: 'Developer Support', path: '/bantuan', totalNotif: totalNotifChat.value },
             { name: 'Panduan', path: '/panduan' }
         ]
     }
 
     return [
         { name: 'Dashboard', path: '/dashboard' },
-        { name: 'Inbox', path: '/inbox', totalNotif: count.value },
-        { name: 'Notification', path: '/notification' },
+        { name: 'Salesman Request', path: '/inbox', totalNotif: count.value },
+        { name: 'Informasi Program', path: '/notification' },
         { name: 'Customer', path: '/customers' },
         { name: 'Produk', path: '/product' },
         { name: 'Manage Product', path: '/product/manage' },
         { name: 'Salesman', path: '/salesman' },
-        { name: 'Store', path: '/store' },
-        { name: 'Developer Support', path: '/bantuan' },
+        { name: 'Developer Support', path: '/bantuan', totalNotif: totalNotifChat.value },
         { name: 'Panduan', path: '/panduan' }
     ]
 })

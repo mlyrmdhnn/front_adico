@@ -2,8 +2,10 @@
 import SalesmanLayout from '@/layouts/SalesmanLayout.vue';
 import { Send } from 'lucide-vue-next'
 import { useChatDeveloper } from '@/composables/useChatDeveloper';
-const { isLoading, message, sendMessage, historyChat, getMessage } = useChatDeveloper()
+import SalesmanButtonNav from '@/components/SalesmanButtonNav.vue';
+const { isLoading, message, sendMessage, historyChat, getMessage, readChatNotif } = useChatDeveloper()
 getMessage()
+readChatNotif()
 const formatDate = (date: any) => {
     if (!date) return '-'
 
@@ -23,6 +25,7 @@ const sendChat = async () => {
 
 <template>
     <SalesmanLayout>
+        <SalesmanButtonNav class="mb-4" />
         <!-- {{ historyChat }} -->
         <div class=" mx-auto bg-white rounded-lg shadow flex flex-col h-[calc(100vh-120px)]">
 

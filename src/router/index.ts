@@ -14,12 +14,10 @@ import EditProduct from '@/pages/manager/editProduct.vue'
 import SalesmanPage from '@/pages/salesman/SalesmanPage.vue'
 import Toko from '@/pages/salesman/Toko.vue'
 import Store from '@/pages/manager/Store.vue'
-import SalesmanStore from '@/pages/salesman/SalesmanStore.vue'
 import StoreEdit from '@/pages/manager/StoreEdit.vue'
 import SalesmanRequest from '@/pages/salesman/SalesmanRequest.vue'
 import Inbox from '@/pages/manager/Inbox.vue'
 import InboxDetail from '@/pages/manager/InboxDetail.vue'
-import SalesmanAllRequest from '@/pages/salesman/salesmanAllRequest.vue'
 import SalesmanRequestDetail from '@/pages/salesman/SalesmanRequestDetail.vue'
 import Panduan from '@/pages/manager/Panduan.vue'
 import SalesmanCustomer from '@/pages/salesman/SalesmanCustomer.vue'
@@ -40,6 +38,8 @@ import SalesmanNotification from '@/pages/salesman/SalesmanNotification.vue'
 import Bantuan from '@/pages/manager/Bantuan.vue'
 import SalesmanDeveloperSupport from '@/pages/salesman/SalesmanDeveloperSupport.vue'
 import SalesmanPanduan from '@/pages/salesman/SalesmanPanduan.vue'
+import SalesmanProffile from '@/pages/salesman/SalesmanProffile.vue'
+import CustomerEditPage from '@/pages/manager/CustomerEditPage.vue'
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
@@ -133,6 +133,11 @@ const router = createRouter({
       component: Bantuan,
       meta: { role: ['manager', 'supervisor'], requiresAuth: true },
     },
+    // {
+    //   path: '/customer/edit',
+    //   component: CustomerEditPage,
+    //   meta: { role: ['manager', 'supervisor'], requiresAuth: true },
+    // },
     // proffile
     { path: '/proffile', component: Proffile },
     // salesman
@@ -147,18 +152,8 @@ const router = createRouter({
       meta: { role: 'salesman', requiresAuth: true },
     },
     {
-      path: '/salesman/store',
-      component: SalesmanStore,
-      meta: { role: 'salesman', requiresAuth: true },
-    },
-    {
       path: '/salesman/request',
       component: SalesmanRequest,
-      meta: { role: 'salesman', requiresAuth: true },
-    },
-    {
-      path: '/salesman/all-request',
-      component: SalesmanAllRequest,
       meta: { role: 'salesman', requiresAuth: true },
     },
     {
@@ -187,11 +182,6 @@ const router = createRouter({
       meta: { role: 'salesman', requiresAuth: true },
     },
     {
-      path: '/salesman/store-range-recap/pdf',
-      component: StoreRangeReport,
-      meta: { role: 'salesman', requriesAuth: true },
-    },
-    {
       path: '/salesman/customer-range-recap/pdf',
       component: CustomerRangeRecap,
       meta: { role: 'salesman', requiresAuth: true },
@@ -209,6 +199,11 @@ const router = createRouter({
     {
       path: '/salesman/panduan',
       component: SalesmanPanduan,
+      meta: { role: 'salesman', requiresAuth: true },
+    },
+    {
+      path: '/salesman/profile',
+      component: SalesmanProffile,
       meta: { role: 'salesman', requiresAuth: true },
     },
     // 403

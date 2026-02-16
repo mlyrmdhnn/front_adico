@@ -5,6 +5,7 @@ import { ref, nextTick, onMounted, computed } from 'vue';
 import { useAuthStore } from '@/stores/auth';
 import { useStore } from '@/composables/useStore';
 import { FileText } from 'lucide-vue-next';
+import SalesmanButtonNav from '@/components/SalesmanButtonNav.vue';
 const { user } = useAuthStore()
 const { storeBySalesman, dataStoreBySalesman, isLoading, getStoreRangeRecap, startDate, endDate } = useStore()
 

@@ -53,6 +53,20 @@ export function useChatDeveloper() {
     }
   }
 
+  const totalNotifChat = ref(0)
+  const getNotifChatCount = async () => {
+    try {
+      const res: any = await api.get('/user/chat/count/notification')
+      totalNotifChat.value = res.data.data
+    } catch (err: any) {
+    } finally {
+    }
+  }
+
+  const readChatNotif = async () => {
+    const res: any = await api.post('/user/chat/read')
+  }
+
   return {
     isLoading,
     message,
@@ -63,5 +77,10 @@ export function useChatDeveloper() {
     dataChat,
     getDetailChat,
     sendMsg,
+
+    totalNotifChat,
+    getNotifChatCount,
+
+    readChatNotif,
   }
 }

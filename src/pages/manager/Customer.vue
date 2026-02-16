@@ -6,8 +6,11 @@ import { Trash2, Pencil } from 'lucide-vue-next';
 import Delete from '@/components/alert/Delete.vue';
 const { getDataCustomer, dataCustomer, links, isLoading, keyword, setDelete, showConfirmDelete, deleteCustomer } = useCustomer()
 onMounted(async () => {
-    getDataCustomer()
+    await getDataCustomer()
+    console.log(dataCustomer.value)
 })
+
+
 const getPage = (url: string) => {
     if (!url) return
     const params = new URL(url).searchParams
@@ -26,11 +29,15 @@ const getPage = (url: string) => {
                 <thead class="bg-neutral-100 border-b border-neutral-300">
                     <tr class="text-left text-neutral-700">
                         <th class="px-3 py-2 whitespace-nowrap">No</th>
+                        <th class="px-3 py-2 whitespace-nowrap">Customer Code</th>
                         <th class="px-3 py-2 whitespace-nowrap">Name</th>
                         <th class="px-3 py-2 whitespace-nowrap">NPWP</th>
                         <th class="px-3 py-2 whitespace-nowrap">Phone</th>
-                        <th class="px-3 py-2 whitespace-nowrap">Store Name & address</th>
-                        <!-- <th class="px-3 py-2 whitespace-nowrap">Action</th> -->
+                        <th class="px-3 py-2 whitespace-nowrap">Address</th>
+                        <th class="px-3 py-2 whitespace-nowrap">PIC</th>
+                        <th class="px-3 py-2 whitespace-nowrap">RE</th>
+                        <th class="px-3 py-2 whitespace-nowrap">Created By</th>
+                        <th class="px-3 py-2 whitespace-nowrap">Actions</th>
                     </tr>
                 </thead>
 
@@ -38,28 +45,28 @@ const getPage = (url: string) => {
                     <tr v-for="(c, i) in dataCustomer" :key="c.id ?? i"
                         class="border-b border-neutral-300 hover:bg-neutral-50">
                         <td class="px-3 py-2 whitespace-nowrap">{{ i + 1 }}</td>
-                        <td class="px-3 py-2 whitespace-nowrap">{{ c.name }}</td>
-                        <td class="px-3 py-2 whitespace-nowrap">{{ c.npwp ? c.npwp : 'Tidak Disertakan' }}</td>
-                        <td class="px-3 py-2 whitespace-nowrap">{{ c.phone }}</td>
-                        <td v-if="c.store.length > 0" class="px-3 py-2">
-                            <ul class="space-y-1">
-                                <li v-for="s in c.store" :key="s.id" class="border rounded px-2 py-1 text-xs">
-                                    <div class="font-medium">{{ s.name }}</div>
-                                    <div class="text-neutral-500">{{ s.address }}</div>
-                                </li>
-                            </ul>
-                        </td>
-                        <td v-else class="px-3 py-2 whitescpace-nowrao">Tidak Disertakan</td>
-                        <!-- <td class="px-3 py-2 whitespace-nowrap">
-                            <div class="flex gap-2 text-white">
-                                <button @click="setDelete(c.id)" class="bg-red-500 p-1 rounded">
+                        <td class="px-3 py-2 whitespace-nowrap">{{ c.customer_code }}</td>
+                        <td class="px-3 py-2 whitespace-nowrap">{{ c.store_name }}</td>
+                        <td class="px-3 py-2 whitespace-nowrap">{{ c.npwp ? c.npwp : '-' }}</td>
+                        <td class="px-3 py-2 whitespace-nowrap">{{ c.phone ? c.phone : '-' }}</td>
+                        <td class="px-3 py-2 whitespace-nowrap">{{ c.address }}</td>
+                        <td class="px-3 py-2 whitespace-nowrap">{{ c.pic ? c.pic : '-' }}</td>
+                        <td class="px-3 py-2 whitespace-nowrap">{{ c.re ? c.re : '-' }}</td>
+                        <td class="px-3 py-2 whitespace-nowrap">{{ c.created_by_salesman ? c.created_by_salesman.name :
+                            '-'
+                        }}</td>
+                        <td class="px-3 py-2 whitescpae-nowrap">
+                            <div class="gap-2 flex">
+                                <button @click="setDelete(c.id)"
+                                    class="bg-red-500 p-1 rounded text-white cursor-pointer">
                                     <Trash2 :size="20" />
                                 </button>
-                                <routerLink :to="`/customer/edit?id=${c.id}`" class="bg-sky-500 rounded p-1">
+                                <routerLink :to="`/customer/edit?id=${c.id}`"
+                                    class="bg-sky-500 p-1 rounded text-white cursor-pointer">
                                     <Pencil :size="20" />
                                 </routerLink>
                             </div>
-                        </td> -->
+                        </td>
                     </tr>
                 </tbody>
 

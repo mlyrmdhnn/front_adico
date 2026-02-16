@@ -33,6 +33,7 @@ const getPage = (url: string) => {
                         <th class="px-3 py-2 whitescape-nowrap">Salesman Code</th>
                         <th class="px-3 py-2 whitescape-nowrap">Store</th>
                         <th class="px-3 py-2 whitespace-nowrap">Address</th>
+                        <th class="px-3 py-2 whitespace-nowrap">Invoice</th>
                         <th class="px-3 py-2 whitescape-nowrap">Status1</th>
                         <th class="px-3 py-2 whitescape-nowrap">Status2</th>
                         <th class="px-3 py-2 whitescape-nowrap">Actions</th>
@@ -48,8 +49,9 @@ const getPage = (url: string) => {
                         </span>
 
                         <td class="px-3 py-2 whitescpae-nowrap">{{ p.salesman.code }}</td>
-                        <td class="px-3 py-2 whitescpae-nowrap">{{ p.store.name }}</td>
-                        <td class="px-3 py-2 whitescpae-nowrap">{{ p.store.address }}</td>
+                        <td class="px-3 py-2 whitescpae-nowrap">{{ p.customer.store_name }}</td>
+                        <td class="px-3 py-2 whitescpae-nowrap">{{ p.customer.address }}</td>
+                        <td class="px-3 py-2 whitescpae-nowrap">INV-{{ p.created_at }}</td>
                         <td class="px-3 py-2 whitescpae-nowrap"
                             :class="[p.status1 == 'rejected' ? 'text-red-500' : '', p.status1 == 'approved' ? 'text-green-500' : 'text-amber-500']">
                             {{
@@ -62,9 +64,6 @@ const getPage = (url: string) => {
                         </td>
                         <td class="px-3 py-2 whitescpae-nowrap">
                             <div class="gap-2 flex">
-                                <!-- <button class="bg-red-500 p-1 rounded text-white cursor-pointer">
-                                    <Trash2 :size="20" />
-                                </button> -->
                                 <routerLink :to="`/inbox/detail?id=${p.id}`"
                                     class="bg-sky-500 p-1 rounded text-white cursor-pointer">
                                     <Eye :size="20" />

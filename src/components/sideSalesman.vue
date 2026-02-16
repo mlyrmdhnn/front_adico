@@ -4,12 +4,15 @@ import { LogOut, ShoppingCart, Menu } from 'lucide-vue-next'
 import { useAuth } from '@/composables/useAuth';
 import { ref, onMounted, onUnmounted, computed } from 'vue';
 import { useNotifications } from '@/composables/useNotifications';
+import { useChatDeveloper } from '@/composables/useChatDeveloper';
 const { userData, getMe, isLoading, logout } = useAuth()
 import { useRoute } from 'vue-router';
 const route = useRoute()
 getMe()
 const { getNotifCount, notificationCount, } = useNotifications()
+const { getNotifChatCount, totalNotifChat } = useChatDeveloper()
 getNotifCount()
+getNotifChatCount()
 
 interface Menu {
     name: string;
@@ -19,27 +22,31 @@ interface Menu {
 
 const menus = computed(() => {
     return [
-        { name: 'Report', path: '/salesman/report' },
-        { name: 'Notification', path: '/salesman/notification', totalNotif: notificationCount.value },
-        { name: 'Your Request', path: '/salesman/all-request' },
-        { name: 'Request', path: '/salesman/request' },
-        { name: 'Store', path: '/salesman/store' },
-        { name: 'Customer', path: '/salesman/customer' },
-        { name: 'Developer Support', path: '/salesman/developer/support' },
+        { name: 'Report Salesman', path: '/salesman/report' },
+        { name: 'Program penjualan', path: '/salesman/notification', totalNotif: notificationCount.value },
+        { name: 'Create PO', path: '/salesman/request' },
+        { name: 'Create Customer/NOO', path: '/salesman/customer' },
+        { name: 'Customer Service', path: '/salesman/developer/support', totalNotif: totalNotifChat.value },
         { name: 'Panduan', path: '/salesman/panduan' }
     ]
 })
 
 const now = ref<Date>(new Date())
 let timer: number
+let intervalId: number
 onMounted(() => {
     timer = window.setInterval(() => {
         now.value = new Date()
     }, 1000)
+    intervalId = window.setInterval(async () => {
+        await getNotifChatCount()
+    }, 5000)
+
 })
 
 onUnmounted(() => {
     clearInterval(timer)
+    clearInterval(intervalId)
 })
 
 const isShow = ref<boolean>(false)
@@ -76,7 +83,7 @@ const setShow = () => {
                 </div>
 
                 <div class="bg-neutral-100 border-neutral-200 border-t-2 mb-16 flex justify-between px-2">
-                    <routerLink to="/proffile">
+                    <routerLink to="/salesman/profile">
                         <div class="px-2 py-2">
                             <h1 class="text-[16px] max-w-32 max-h-18 overflow-auto font-semibold text-slate-900">
                                 <!-- {{ user?.name }} -->
@@ -120,7 +127,7 @@ const setShow = () => {
             </div>
 
             <div class="bg-neutral-100 border-neutral-200 border-t-2 mb-16 flex justify-between px-2">
-                <routerLink to="/proffile">
+                <routerLink to="/salesman/profile">
                     <div class="px-2 py-2">
                         <h1 class="text-[16px] max-w-32 max-h-18 overflow-auto font-semibold text-slate-900">
                             <!-- {{ user?.name }} -->

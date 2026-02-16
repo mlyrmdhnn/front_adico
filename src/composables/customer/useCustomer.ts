@@ -52,13 +52,45 @@ export function useCustomer() {
   }
 
   const isLoadingCreate = ref(false)
-  const formCreateCustomer = ref<{ name: string; phone: number; npwp: number }>({
-    name: '',
-    phone: 0,
-    npwp: 0,
+  const formCreateCustomer = ref<{
+    // name: string
+    phone: string
+    npwp: string
+    address: string
+    storeName: string
+    pic: string
+    re: string
+  }>({
+    // name: '',
+    phone: '',
+    npwp: '',
+    address: '',
+    storeName: '',
+    pic: '',
+    re: '',
   })
   const createCustomer = async () => {
+    const validate = formCreateCustomer.value
+    // if (validate.name.length <= 0) {
+    //   return show('Required name field', 'error')
+    // }
+    if (validate.phone?.length <= 0) {
+      return show('Required phone field', 'error')
+    }
+    if (validate.address.length <= 0) {
+      return show('Required address field', 'error')
+    }
+    // if (validate.pic.length <= 0) {
+    //   return show('Required pic field', 'error')
+    // }
+    if (validate.re.length <= 0) {
+      return show('Required re field', 'error')
+    }
+    if (validate.storeName.length <= 0) {
+      return show('Required store name field', 'error')
+    }
     isLoadingCreate.value = true
+
     try {
       const res: any = await api.post('/customer/create', formCreateCustomer.value)
       show('Success to create customer', 'success')
@@ -78,23 +110,40 @@ export function useCustomer() {
 
   const formEditCustomer = ref({
     id: null,
-    name: '',
+    store_name: '',
     phone: '',
     npwp: '',
-    stores: [] as any[],
+    address: '',
+    pic: '',
+    re: '',
   })
   const getCustomerDetail = async (id: any) => {
     isLoading.value = true
     try {
       const res: any = await api.get(`/customer/detail/${id}`)
-
       formEditCustomer.value = <any>{
-        name: res.data.data.name,
+        id: res.data.data.id,
+        store_name: res.data.data.store_name,
         phone: res.data.data.phone,
         npwp: res.data.data.npwp,
-        stores: res.data.data.store,
+        address: res.data.data.address,
+        pic: res.data.data.pic,
+        re: res.data.data.re,
       }
+      console.log(res.data.data)
     } catch (err: any) {
+    } finally {
+      isLoading.value = false
+    }
+  }
+
+  const editCustomer = async () => {
+    isLoading.value = true
+    try {
+      const res: any = await api.post('/customer/edit', formEditCustomer.value)
+      show('Success update customer', 'success')
+    } catch (err: any) {
+      show('Failed update customer', 'error')
     } finally {
       isLoading.value = false
     }
@@ -147,5 +196,6 @@ export function useCustomer() {
     dataStore,
     getCustomerBySalesmanMonthly,
     dataCustomerBySalesmanMonthly,
+    editCustomer,
   }
 }
